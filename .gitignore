@@ -1,0 +1,17 @@
+# Bỏ qua dữ liệu ảnh nặng
+data_raw/
+dataset/
+dataset_final/
+
+# Bỏ qua file nén
+*.zip
+*.rar
+
+# Bỏ qua file model nặng
+models/
+*.h5
+*.tflite
+
+# Bỏ qua file rác của Python
+__pycache__/
+*.pyc
