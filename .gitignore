@@ -1,16 +1,16 @@
 # Bỏ qua dữ liệu ảnh nặng
 data_raw/
-dataset/
+test/
+train/
+val/
 dataset_final/
+venv/
 
 # Bỏ qua file nén
 *.zip
 *.rar
-
-# Bỏ qua file model nặng
-models/
-*.h5
 *.tflite
+convert_to_tflite.py
 
 # Bỏ qua file rác của Python
 __pycache__/
