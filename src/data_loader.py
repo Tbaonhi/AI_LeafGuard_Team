@@ -18,7 +18,7 @@ except ImportError:
 IMG_SIZE = 224
 BATCH_SIZE = 32
 
-
+ 
 def _find_dataset_root(candidate):
     candidate = os.path.abspath(candidate)
     # candidates to check (covers dataset/, dataset/dataset/ and project-root/dataset)
