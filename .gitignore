@@ -11,7 +11,11 @@ venv/
 *.rar
 *.tflite
 convert_to_tflite.py
+create_class_indices.py
 
 # Bỏ qua file rác của Python
 __pycache__/
 *.pyc
+
+# bỏ qua các file từ MacOS
+.DS_Store
