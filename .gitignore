@@ -19,3 +19,13 @@ __pycache__/
 
 # bỏ qua các file từ MacOS
 .DS_Store
+
+# Firebase credentials và environment files (BẢO MẬT)
+firebase-credentials.json
+.env
+*.secret
+.streamlit/secrets.toml
+
+# Python virtual environment
+.venv/
+*.egg-info/

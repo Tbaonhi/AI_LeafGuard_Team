@@ -4,6 +4,11 @@ from PIL import Image, ImageOps
 import numpy as np
 import os
 import json
+import sys
+
+# Import authentication modules
+from src.auth_manager import AuthManager
+from src.firestore_manager import FirestoreManager
 
 # =======================
 # PAGE CONFIG
@@ -14,8 +19,49 @@ st.set_page_config(
     layout="centered"
 )
 
+# =======================
+# INITIALIZE AUTH
+# =======================
+auth_manager = AuthManager()
+auth_manager.init_session_state()
+firestore = FirestoreManager()
+
+# =======================
+# HEADER & NAVIGATION
+# =======================
 st.title("🌿 AI Plant Disease Detection")
 st.caption("Academic demo – Plant disease recognition using Deep Learning")
+
+# User info in sidebar
+with st.sidebar:
+    st.markdown("### 🔐 Tài khoản")
+    
+    if auth_manager.is_logged_in():
+        user = auth_manager.get_current_user()
+        st.success(f"Xin chào, **{user['display_name']}**!")
+        
+        # Statistics
+        stats = firestore.get_user_statistics(auth_manager.get_current_user_id())
+        st.metric("Tổng chẩn đoán", stats.get('total_diagnoses', 0))
+        
+        # Navigation
+        st.markdown("---")
+        if st.button("👤 Profile", use_container_width=True):
+            st.switch_page("pages/3_👤_Profile.py")
+        if st.button("📊 Lịch sử", use_container_width=True):
+            st.switch_page("pages/4_📊_History.py")
+        if st.button("🚪 Đăng xuất", use_container_width=True):
+            auth_manager.logout()
+            st.rerun()
+    else:
+        st.info("Vui lòng đăng nhập để lưu lịch sử chẩn đoán")
+        if st.button("🔐 Đăng nhập", use_container_width=True):
+            st.switch_page("pages/1_🔐_Login.py")
+        if st.button("📝 Đăng ký", use_container_width=True):
+            st.switch_page("pages/2_📝_Register.py")
+    
+    st.markdown("---")
+    st.caption("⚠️ Academic demo only")
 
 st.divider()
 
@@ -61,6 +107,14 @@ def predict_image(image, model):
 
     preds = model.predict(img)
     return preds[0]
+
+# =======================
+# AUTH GATE (OPTIONAL)
+# =======================
+# Uncomment dòng dưới nếu muốn bắt buộc login
+# if not auth_manager.is_logged_in():
+#     st.warning("⚠️ Vui lòng đăng nhập để sử dụng tính năng chẩn đoán")
+#     st.stop()
 
 # =======================
 # UI – UPLOAD IMAGE
@@ -116,13 +170,39 @@ if file and model and CLASS_NAMES:
         st.subheader("📊 Top-3 Predictions")
 
         top3_idx = preds.argsort()[-3:][::-1]
+        top3_predictions = []
         for i in top3_idx:
             lbl = CLASS_NAMES[i].replace("___", " → ").replace("_", " ")
-            st.write(f"- **{lbl}**: {preds[i]*100:.2f}%")
+            conf = preds[i] * 100
+            st.write(f"- **{lbl}**: {conf:.2f}%")
+            
+            # Prepare for Firestore
+            top3_predictions.append({
+                'label': lbl,
+                'confidence': float(conf)
+            })
+        
+        # =======================
+        # SAVE TO FIRESTORE
+        # =======================
+        if auth_manager.is_logged_in():
+            with st.spinner("Đang lưu kết quả vào lịch sử..."):
+                diagnosis_id = firestore.save_diagnosis(
+                    user_id=auth_manager.get_current_user_id(),
+                    plant_type=plant,
+                    disease=disease,
+                    confidence=float(confidence),
+                    top3_predictions=top3_predictions
+                )
+                
+                if diagnosis_id:
+                    st.success("✅ Kết quả đã được lưu vào lịch sử!")
+                    st.balloons()
+        else:
+            st.info("💡 Đăng nhập để lưu kết quả vào lịch sử của bạn!")
 
 else:
     st.info("⬆️ Please upload an image to start diagnosis.")
 
 st.divider()
 st.caption("⚠️ This system is for academic demonstration only.")
-

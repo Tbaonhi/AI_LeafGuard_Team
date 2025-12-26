@@ -95,7 +95,34 @@ Sử dụng file `requirements.txt` để cài đặt tất cả các dependenci
 ```bash
 $ pip install -r requirements.txt
 ```
-(to be continue)
+
+### 4\. Firebase Setup (Tính năng Mới! 🔥)
+
+**Dự án đã tích hợp Firebase Authentication!**
+
+Để sử dụng tính năng đăng ký/đăng nhập và lưu lịch sử chẩn đoán:
+
+1. Tạo Firebase project theo hướng dẫn trong [FIREBASE_SETUP.md](FIREBASE_SETUP.md)
+2. Download service account key (JSON file)
+3. Đặt file JSON vào root project với tên `firebase-credentials.json`
+4. Chạy app và đăng ký tài khoản
+
+**Tính năng Authentication:**
+- 🔐 Đăng ký / Đăng nhập với Email & Password
+- 👤 Quản lý Profile cá nhân
+- 📊 Lưu lịch sử chẩn đoán tự động
+- 📈 Xem thống kê và insights
+- 💾 Export lịch sử ra CSV
+
+### 5\. Chạy Application
+
+```bash
+$ streamlit run app.py
+```
+
+Application sẽ mở tại: `http://localhost:8501`
+
+
 
 -----
 
