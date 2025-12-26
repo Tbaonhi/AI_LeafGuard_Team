@@ -97,6 +97,16 @@ $ pip install -r requirements.txt
 ```
 (to be continue)
 
+### tạo file .env để tạo kết nối với database
+```
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=Your_password
+DB_NAME=leafguard_db
+```
+   git pull
+   python database/init_db.py  # Tự động cập nhật
 -----
 
 ## 👥 Nhóm Phát triển (Team)
