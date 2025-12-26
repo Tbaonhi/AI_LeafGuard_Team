@@ -2,3 +2,9 @@ streamlit
 tensorflow
 numpy
 pillow
+mysql-connector-python
+pymysql
+scikit-learn
+matplotlib
+seaborn
+python-dotenv
