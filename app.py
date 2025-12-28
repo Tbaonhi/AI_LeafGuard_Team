@@ -138,8 +138,22 @@ if file and model and CLASS_NAMES:
         confidence = preds[class_idx] * 100
         label = CLASS_NAMES[class_idx]
 
-        # Split label
-        plant, disease = label.split("___")
+        # Split label logic (Robust)
+        if "___" in label:
+            plant, disease = label.split("___")
+        elif "__" in label: # Handle double underscore case
+            parts = label.split("__", 1)
+            plant = parts[0]
+            disease = parts[1]
+        else:
+            # Fallback: Split by first underscore or keep mostly intact
+            parts = label.split("_", 1)
+            if len(parts) == 2:
+                plant, disease = parts
+            else:
+                plant = label
+                disease = "Unknown Status"
+
         disease = disease.replace("_", " ")
 
         st.success("✅ Diagnosis Complete")
