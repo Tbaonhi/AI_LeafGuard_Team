@@ -57,5 +57,5 @@ if __name__ == "__main__":
     print("=" * 60)
     print("📁 Các file đã được lưu:")
     print("   - models/MobileNetV2_best.h5 (Model tốt nhất)")
-    print("   - models/plant_disease_final.h5 (Model cuối cùng)")
+    print("   - models/plant_disease_final.h5 (Model cuối cùng)") 
     print("   - models/evaluation_report.json (Báo cáo đánh giá)")
