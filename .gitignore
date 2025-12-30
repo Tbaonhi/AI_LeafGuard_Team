@@ -19,3 +19,5 @@ __pycache__/
 
 # bỏ qua các file từ MacOS
 .DS_Store
+app_test.py
+.env
