@@ -1,24 +1,11 @@
-# database/db_operations.py
 from config.database import get_connection, close_connection
 from mysql.connector import Error
 import json
 from datetime import datetime
+import numpy as np
 
-def save_diagnosis(firebase_user_id, plant_type, disease_status, confidence, predictions, image_path=None):
-    """
-    Lưu kết quả chẩn đoán vào database
-    
-    Args:
-        firebase_user_id (str): User ID từ Firebase Auth (lấy từ code Firebase của team)
-        plant_type (str): Loại cây (VD: "Tomato")
-        disease_status (str): Tình trạng bệnh (VD: "Bacterial spot")
-        confidence (float): Độ tin cậy (0-1)
-        predictions (dict): Dictionary chứa tất cả predictions {class_name: probability}
-        image_path (str, optional): Đường dẫn ảnh nếu lưu file
-    
-    Returns:
-        int: ID của record vừa tạo, hoặc False nếu lỗi
-    """
+def save_diagnosis(plant_type, disease_status, confidence, predictions, firebase_user_id=None, image_path=None):
+    #Lưu kết quả chẩn đoán vào database
     connection = get_connection()
     if not connection:
         return False
@@ -29,39 +16,38 @@ def save_diagnosis(firebase_user_id, plant_type, disease_status, confidence, pre
         # Chuyển predictions thành JSON
         predictions_json = json.dumps(predictions, ensure_ascii=False)
         
+        # Convert numpy types to Python native types (MySQL connector không hỗ trợ numpy types)
+        if isinstance(confidence, (np.floating, np.integer)):
+            confidence = float(confidence)
+        else:
+            confidence = float(confidence) if confidence is not None else 0.0
+        
+        # INSERT theo đúng thứ tự trong schema: id (auto), firebase_user_id, image_path, plant_type, disease_status, confidence, prediction_json, created_at (auto), updated_at (auto)
         query = """
         INSERT INTO diagnoses 
         (firebase_user_id, image_path, plant_type, disease_status, confidence, prediction_json)
         VALUES (%s, %s, %s, %s, %s, %s)
         """
         
+        # Thứ tự values phải khớp với thứ tự trong query
         values = (firebase_user_id, image_path, plant_type, disease_status, confidence, predictions_json)
         cursor.execute(query, values)
         connection.commit()
         
         diagnosis_id = cursor.lastrowid
-        print(f"✅ Đã lưu chẩn đoán ID: {diagnosis_id}")
+        print(f"Đã lưu chẩn đoán ID: {diagnosis_id}")
         return diagnosis_id
         
     except Error as e:
-        print(f"❌ Lỗi lưu dữ liệu: {e}")
+        print(f"Lỗi lưu dữ liệu: {e}")
         return False
     finally:
         if connection:
             cursor.close()
             close_connection(connection)
 
-def get_user_diagnoses(firebase_user_id, limit=10):
-    """
-    Lấy lịch sử chẩn đoán của một user
-    
-    Args:
-        firebase_user_id (str): User ID từ Firebase
-        limit (int): Số lượng record tối đa
-    
-    Returns:
-        list: Danh sách các chẩn đoán
-    """
+def get_user_diagnoses(firebase_user_id=None, limit=10):
+    #Lấy lịch sử chẩn đoán của một user hoặc tất cả nếu không có user_id
     connection = get_connection()
     if not connection:
         return []
@@ -69,14 +55,22 @@ def get_user_diagnoses(firebase_user_id, limit=10):
     try:
         cursor = connection.cursor(dictionary=True)
         
-        query = """
-        SELECT * FROM diagnoses 
-        WHERE firebase_user_id = %s
-        ORDER BY created_at DESC 
-        LIMIT %s
-        """
-        
-        cursor.execute(query, (firebase_user_id, limit))
+        if firebase_user_id:
+            query = """
+            SELECT * FROM diagnoses 
+            WHERE firebase_user_id = %s
+            ORDER BY created_at DESC 
+            LIMIT %s
+            """
+            cursor.execute(query, (firebase_user_id, limit))
+        else:
+            # Lấy tất cả nếu không có user_id
+            query = """
+            SELECT * FROM diagnoses 
+            ORDER BY created_at DESC 
+            LIMIT %s
+            """
+            cursor.execute(query, (limit,))
         results = cursor.fetchall()
         
         # Parse JSON field
@@ -87,7 +81,7 @@ def get_user_diagnoses(firebase_user_id, limit=10):
         return results
         
     except Error as e:
-        print(f"❌ Lỗi lấy dữ liệu: {e}")
+        print(f"Lỗi lấy dữ liệu: {e}")
         return []
     finally:
         if connection:
@@ -95,12 +89,7 @@ def get_user_diagnoses(firebase_user_id, limit=10):
             close_connection(connection)
 
 def get_statistics():
-    """
-    Lấy thống kê tổng quan
-    
-    Returns:
-        dict: Thống kê hoặc None nếu lỗi
-    """
+    #Lấy thống kê tổng quan
     connection = get_connection()
     if not connection:
         return None
@@ -139,17 +128,53 @@ def get_statistics():
         }
         
     except Error as e:
-        print(f"❌ Lỗi lấy thống kê: {e}")
+        print(f"Lỗi lấy thống kê: {e}")
         return None
     finally:
         if connection:
             cursor.close()
             close_connection(connection)
 
+def delete_diagnosis(diagnosis_id: int, firebase_user_id: str = None) -> bool:
+    #Xóa một chẩn đoán từ database
+    connection = get_connection()
+    if not connection:
+        return False
+    
+    try:
+        cursor = connection.cursor()
+        
+        if firebase_user_id:
+            # Xóa với điều kiện user_id
+            query = """
+            DELETE FROM diagnoses 
+            WHERE id = %s AND firebase_user_id = %s
+            """
+            cursor.execute(query, (diagnosis_id, firebase_user_id))
+        else:
+            # Xóa không có điều kiện user_id (admin)
+            query = "DELETE FROM diagnoses WHERE id = %s"
+            cursor.execute(query, (diagnosis_id,))
+        
+        connection.commit()
+        
+        if cursor.rowcount > 0:
+            print(f"✅ Đã xóa chẩn đoán ID: {diagnosis_id}")
+            return True
+        else:
+            print(f"⚠️ Không tìm thấy chẩn đoán ID: {diagnosis_id} hoặc không có quyền xóa")
+            return False
+        
+    except Error as e:
+        print(f"❌ Lỗi xóa dữ liệu: {e}")
+        return False
+    finally:
+        if connection:
+            cursor.close()
+            close_connection(connection)
+
 def update_statistics():
-    """
-    Cập nhật bảng statistics (có thể gọi sau mỗi lần save_diagnosis)
-    """
+    #Cập nhật bảng statistics (có thể gọi sau mỗi lần save_diagnosis)
     connection = get_connection()
     if not connection:
         return False
@@ -184,7 +209,7 @@ def update_statistics():
         return True
         
     except Error as e:
-        print(f"❌ Lỗi cập nhật thống kê: {e}")
+        print(f"Lỗi cập nhật thống kê: {e}")
         return False
     finally:
         if connection:

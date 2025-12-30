@@ -17,7 +17,7 @@ DB_NAME = os.getenv('DB_NAME', 'leafguard_db')
 # Kiểm tra password có được cung cấp không
 if not DB_PASSWORD:
     raise ValueError(
-        "❌ DB_PASSWORD không được tìm thấy trong file .env!\n"
+        "DB_PASSWORD không được tìm thấy trong file .env!\n"
         "Vui lòng tạo file .env với nội dung:\n"
         "DB_PASSWORD=your_actual_password"
     )
@@ -34,16 +34,14 @@ DB_CONFIG = {
 }
 
 def get_connection():
-    """Tạo kết nối đến MySQL database"""
     try:
         connection = mysql.connector.connect(**DB_CONFIG)
         if connection.is_connected():
             return connection
     except Error as e:
-        print(f"❌ Lỗi kết nối database: {e}")
+        print(f"Lỗi kết nối database: {e}")
         return None
 
 def close_connection(connection):
-    """Đóng kết nối database"""
     if connection and connection.is_connected():
         connection.close()
