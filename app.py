@@ -5,6 +5,7 @@ import numpy as np
 import os
 import json
 from database.db_operations import save_diagnosis, get_user_diagnoses, get_statistics, update_statistics
+from camera_input import get_image_input
 
 # =======================
 # PAGE CONFIG
@@ -131,17 +132,14 @@ def predict_image(image, model):
     return preds[0]
 
 # =======================
-# UI – UPLOAD IMAGE
+# UI – IMAGE INPUT
 # =======================
-st.subheader("📤 Upload a leaf image")
+image = get_image_input()
 
-file = st.file_uploader(
-    "Supported formats: JPG, PNG, JPEG",
-    type=["jpg", "png", "jpeg"]
-)
 
-if file and model and CLASS_NAMES:
-    image = Image.open(file).convert("RGB")
+
+if image is not None and model and CLASS_NAMES:
+    st.image(image, caption="Input Image", use_container_width=True)
     st.image(image, caption="Uploaded Image", use_container_width=True)
 
     if st.button("🔍 Diagnose"):
