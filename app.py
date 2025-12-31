@@ -7,6 +7,17 @@ import json
 import time
 import random
 
+# --- Database Imports (with Error Handling) ---
+try:
+    from database.db_operations import save_diagnosis, get_user_diagnoses, get_statistics, update_statistics
+except ImportError:
+    # Fallback functions if database setup is missing
+    print("⚠️ Database module not found. Running in offline mode.")
+    def save_diagnosis(*args, **kwargs): return "OFFLINE_ID"
+    def get_user_diagnoses(*args, **kwargs): return []
+    def get_statistics(*args, **kwargs): return {}
+    def update_statistics(*args, **kwargs): pass
+
 # =======================
 # 1. SETUP PAGE
 # =======================
@@ -26,7 +37,7 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Outfit:wght@300;400;600&display=swap');
 
 :root {
-    --neon-green: #39FF14;     /* Màu xanh Neon lá cây rực rỡ hơn */
+    --neon-green: #39FF14;
     --neon-accent: #00FFA3;
     --glass-bg: rgba(10, 20, 15, 0.7);
     --glass-border: rgba(57, 255, 20, 0.3);
@@ -42,14 +53,14 @@ h1, h2, h3, .hero-text {
     text-transform: uppercase;
 }
 
-/* === 1. ANIMATED JUNGLE BACKGROUND === */
+/* === ANIMATED BACKGROUND === */
 div[data-testid="stAppViewContainer"] {
     background: radial-gradient(circle at 50% 50%, #0a2e1e 0%, #000000 100%);
     background-size: 100% 100%;
     color: var(--text-primary);
 }
 
-/* === 2. FALLING LEAVES ANIMATION === */
+/* === FALLING LEAVES === */
 .leaf {
     position: fixed;
     top: -10%;
@@ -67,7 +78,7 @@ div[data-testid="stAppViewContainer"] {
     100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
 
-/* === 3. GLOWING TEXT FIX === */
+/* === GLOWING TEXT === */
 .glowing-text {
     font-size: 5rem;
     font-weight: 800;
@@ -84,7 +95,7 @@ div[data-testid="stAppViewContainer"] {
     to { text-shadow: 0 0 30px var(--neon-accent), 0 0 10px #fff; }
 }
 
-/* === 4. GLASS CARDS === */
+/* === GLASS CARDS === */
 .glass-card {
     background: var(--glass-bg);
     backdrop-filter: blur(16px);
@@ -98,12 +109,12 @@ div[data-testid="stAppViewContainer"] {
     z-index: 1;
 }
 
-/* === 5. CIRCULAR PROGRESS (UPDATED STYLE) === */
+/* === CIRCULAR PROGRESS === */
 .progress-container {
     position: relative;
     width: 150px;
     height: 150px;
-    margin-left: auto; /* Align right in column */
+    margin-left: auto;
 }
 
 .circular-chart {
@@ -116,23 +127,23 @@ div[data-testid="stAppViewContainer"] {
 .circle-bg {
     fill: none;
     stroke: rgba(255, 255, 255, 0.1);
-    stroke-width: 2.5; /* Thinner background ring */
+    stroke-width: 2.5;
 }
 
 .circle {
     fill: none;
-    stroke-width: 2.5; /* Match width */
+    stroke-width: 2.5;
     stroke-linecap: round;
     animation: progress 1s ease-out forwards;
     transform-origin: center;
-    transform: rotate(-90deg); /* Start from top */
+    transform: rotate(-90deg);
 }
 
 .percentage-text {
     fill: #fff;
     font-family: 'Rajdhani', sans-serif;
     font-weight: bold;
-    font-size: 0.5em; /* Adjusted font size */
+    font-size: 0.5em;
     text-anchor: middle;
     text-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
@@ -149,7 +160,7 @@ div[data-testid="stAppViewContainer"] {
     0% { stroke-dasharray: 0, 100; }
 }
 
-/* Info Box */
+/* === INFO BOX === */
 .info-box {
     background: rgba(57, 255, 20, 0.1);
     border-left: 4px solid var(--neon-green);
@@ -161,7 +172,7 @@ div[data-testid="stAppViewContainer"] {
     margin-top: 15px;
 }
 
-/* Upload Zone */
+/* === UPLOAD ZONE === */
 .upload-zone {
     border: 2px dashed rgba(57, 255, 20, 0.4);
     border-radius: 20px;
@@ -176,7 +187,7 @@ div[data-testid="stAppViewContainer"] {
     box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
 }
 
-/* Buttons */
+/* === BUTTONS === */
 .stButton > button {
     background: linear-gradient(90deg, transparent 0%, rgba(57, 255, 20, 0.1) 50%, transparent 100%);
     color: var(--neon-green);
@@ -195,7 +206,7 @@ div[data-testid="stAppViewContainer"] {
     box-shadow: 0 0 30px var(--neon-green);
 }
 
-/* Tabs */
+/* === TABS === */
 .stTabs [data-baseweb="tab-list"] {
     background: rgba(255,255,255,0.05);
     border-radius: 16px;
@@ -243,39 +254,58 @@ def load_ai_model():
 def load_metadata():
     c_path = "models/class_indices.json"
     d_path = "data/disease_info.json"
+    
     classes = []
     if os.path.exists(c_path):
         with open(c_path, 'r', encoding='utf-8') as f:
             classes = [k for k, v in sorted(json.load(f).items(), key=lambda x: x[1])]
+    
     info = {}
     if os.path.exists(d_path):
         with open(d_path, 'r', encoding='utf-8') as f: info = json.load(f)
+        
     return classes, info
 
 model = load_ai_model()
 CLASSES, INFO = load_metadata()
 
 def get_prediction(img, model):
-    if not model: return None
-    img = ImageOps.fit(img, (224, 224), Image.Resampling.LANCZOS)
-    arr = tf.keras.applications.mobilenet_v2.preprocess_input(np.array(img)[np.newaxis, ...])
+    if not model: return None, None
+    
+    # Preprocess image
+    img_resized = ImageOps.fit(img, (224, 224), Image.Resampling.LANCZOS)
+    arr = tf.keras.applications.mobilenet_v2.preprocess_input(np.array(img_resized)[np.newaxis, ...])
+    
+    # Run prediction
     preds = model.predict(arr, verbose=0)[0]
     
+    # Process Top 3 results
     top_3 = np.argsort(preds)[-3:][::-1]
     results = []
+    
+    # Store all raw predictions for database
+    raw_predictions = preds
+    
     for i in top_3:
         if i < len(CLASSES):
             label = CLASSES[i]
-            raw = INFO.get(label, {})
+            raw_info = INFO.get(label, {})
             name = label.replace("___", " - ").replace("_", " ").title()
             results.append({
                 "name": name,
+                "raw_label": label, # Keep raw label for DB
                 "score": float(preds[i] * 100),
-                "severity": raw.get("severity", "Medium"),
-                "solution": raw.get("solution", ["Contact specialist."]),
-                "cause": raw.get("cause", "Cause unknown.")
+                "severity": raw_info.get("severity", "Medium"),
+                "solution": raw_info.get("solution", ["Contact specialist."]),
+                "cause": raw_info.get("cause", "Cause unknown.")
             })
-    return results
+    return results, raw_predictions
+
+def get_firebase_user_id():
+    # Mock user ID or integrate with auth system
+    if 'user_id' not in st.session_state:
+        st.session_state['user_id'] = 'demo_user_123'
+    return st.session_state.get('user_id', 'demo_user_123')
 
 # =======================
 # 4. UI STRUCTURE
@@ -320,10 +350,35 @@ with col1:
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("INITIATE DIAGNOSIS"):
             with st.spinner("ANALYZING BIO-DATA..."):
-                time.sleep(1.5)
-                results = get_prediction(img, model)
+                time.sleep(1.5) # UX Delay
+                results, raw_preds = get_prediction(img, model)
+                
                 if results:
                     st.session_state.analysis = results
+                    
+                    # --- DATABASE SAVING LOGIC ---
+                    top_result = results[0]
+                    # Parse label for DB (e.g., "Tomato___Early_blight" -> "Tomato", "Early blight")
+                    clean_label = top_result['raw_label'].replace("___", "_")
+                    parts = clean_label.split("_")
+                    plant_name = parts[0]
+                    disease_name = " ".join(parts[1:]) if len(parts) > 1 else "Unknown"
+                    if "healthy" in clean_label.lower(): 
+                        disease_name = "Healthy"
+                    
+                    # Async-like save to avoid UI blocking
+                    try:
+                        save_diagnosis(
+                            firebase_user_id=get_firebase_user_id(),
+                            plant_type=plant_name,
+                            disease_status=disease_name,
+                            confidence=top_result['score'] / 100.0,
+                            predictions={CLASSES[i]: float(raw_preds[i]) for i in range(len(CLASSES))},
+                            image_path=None
+                        )
+                        update_statistics() # Refresh stats if needed
+                    except Exception as e:
+                        print(f"Database Save Error: {e}")
 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -333,9 +388,17 @@ with col2:
         others = st.session_state.analysis[1:]
         
         is_safe = "healthy" in top['name'].lower()
-        # Màu sắc động dựa trên kết quả
-        accent_color = "#39FF14" if is_safe else ("#FF0055" if top['severity'] == "High" else "#FFD700")
-        status_msg = "HEALTHY SPECIMEN" if is_safe else "INFECTION DETECTED"
+        
+        # Dynamic Colors based on Severity
+        accent_color = "#39FF14" # Green (Default)
+        status_msg = "HEALTHY SPECIMEN"
+        
+        if not is_safe:
+            status_msg = "INFECTION DETECTED"
+            if top['severity'] == "High":
+                accent_color = "#FF0055" # Red
+            else:
+                accent_color = "#FFD700" # Yellow
 
         st.markdown(f'<div class="glass-card" style="border-top: 4px solid {accent_color};">', unsafe_allow_html=True)
         
@@ -344,6 +407,9 @@ with col2:
         with c_res1:
             st.markdown(f'<div style="color: {accent_color}; font-weight: 700; letter-spacing: 2px;">STATUS: {status_msg}</div>', unsafe_allow_html=True)
             st.markdown(f'<h2 style="font-size: 2.5rem; margin: 5px 0; color: #fff; text-shadow: 0 0 10px {accent_color};">{top["name"]}</h2>', unsafe_allow_html=True)
+            if not is_safe:
+                st.markdown(f'<div style="color: #ccc;">Severity Level: {top["severity"]}</div>', unsafe_allow_html=True)
+                
         with c_res2:
             # SVG Circular Chart Implementation
             score = top['score']
@@ -431,253 +497,3 @@ st.markdown("""
     LEAFGUARD AI v3.0 • BIO-DIGITAL INTERFACE
 </div>
 """, unsafe_allow_html=True)
-=======
-import streamlit as st
-import tensorflow as tf
-from PIL import Image, ImageOps
-import numpy as np
-import os
-import json
-from database.db_operations import save_diagnosis, get_user_diagnoses, get_statistics, update_statistics
-from camera_input import get_image_input
-
-# =======================
-# PAGE CONFIG
-# =======================
-st.set_page_config(
-    page_title="AI Plant Disease Detection",
-    page_icon="🌿",
-    layout="centered"
-)
-
-st.title("🌿 AI Plant Disease Detection")
-st.caption("Academic demo – Plant disease recognition using Deep Learning")
-
-# =======================
-# HELPER: GET FIREBASE USER ID
-# =======================
-def get_firebase_user_id():
-    """
-    Lấy Firebase User ID từ session state hoặc Firebase Auth
-    TODO: Thay thế bằng code Firebase thực tế từ team member
-    """
-    # Tạm thời: dùng session state hoặc giá trị demo
-    if 'user_id' not in st.session_state:
-        # Nếu chưa có Firebase code, dùng giá trị demo
-        # Khi có Firebase code, thay bằng: return get_current_user_id() hoặc tương tự
-        st.session_state['user_id'] = 'demo_user_123'  # Giá trị tạm thời
-    
-    return st.session_state.get('user_id', 'demo_user_123')
-
-# =======================
-# SIDEBAR: HISTORY & STATISTICS
-# =======================
-with st.sidebar:
-    st.header("📊 Database Features")
-    
-    tab1, tab2 = st.tabs(["📜 History", "📈 Statistics"])
-    
-    with tab1:
-        st.subheader("Your Diagnosis History")
-        firebase_user_id = get_firebase_user_id()
-        
-        if st.button("🔄 Refresh History"):
-            st.rerun()
-        
-        diagnoses = get_user_diagnoses(firebase_user_id, limit=10)
-        
-        if diagnoses:
-            st.write(f"**Found {len(diagnoses)} recent diagnoses:**")
-            for idx, diag in enumerate(diagnoses, 1):
-                with st.expander(f"#{idx} - {diag['plant_type']} ({diag['created_at'].strftime('%Y-%m-%d %H:%M')})"):
-                    st.write(f"**Disease:** {diag['disease_status']}")
-                    st.write(f"**Confidence:** {diag['confidence']*100:.2f}%")
-                    st.write(f"**Date:** {diag['created_at']}")
-        else:
-            st.info("No diagnosis history found.")
-    
-    with tab2:
-        st.subheader("Overall Statistics")
-        
-        if st.button("🔄 Refresh Stats"):
-            st.rerun()
-        
-        stats = get_statistics()
-        
-        if stats:
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric("Total Diagnoses", stats['total'])
-            with col2:
-                st.metric("Healthy", stats['healthy'])
-            
-            st.metric("Diseased", stats['diseased'])
-            
-            if stats['top_diseases']:
-                st.write("**Top 5 Diseases:**")
-                for disease in stats['top_diseases']:
-                    st.write(f"- {disease['disease_status']}: {disease['count']} cases")
-        else:
-            st.info("No statistics available yet.")
-
-st.divider()
-
-# =======================
-# LOAD MODEL (CACHE)
-# =======================
-@st.cache_resource
-def load_model():
-    model_path = "models/MobileNetV2_best.h5"
-    if not os.path.exists(model_path):
-        st.error("❌ Model file not found!")
-        return None
-    return tf.keras.models.load_model(model_path)
-
-model = load_model()
-
-# =======================
-# LOAD CLASS NAMES (SAFE)
-# =======================
-@st.cache_data
-def load_class_names():
-    class_path = "models/class_indices.json"
-    if not os.path.exists(class_path):
-        st.error("❌ class_indices.json not found!")
-        return None
-    with open(class_path) as f:
-        class_indices = json.load(f)
-    return list(class_indices.keys())
-
-CLASS_NAMES = load_class_names()
-
-# =======================
-# PREDICTION FUNCTION
-# =======================
-def predict_image(image, model):
-    size = (224, 224)
-
-    image = ImageOps.fit(image, size, Image.Resampling.LANCZOS)
-    img = np.asarray(image)
-
-    img = tf.keras.applications.mobilenet_v2.preprocess_input(img)
-    img = img[np.newaxis, ...]
-
-    preds = model.predict(img)
-    return preds[0]
-
-# =======================
-# UI – IMAGE INPUT
-# =======================
-image = get_image_input()
-
-
-
-if image is not None and model and CLASS_NAMES:
-    st.image(image, caption="Input Image", use_container_width=True)
-    st.image(image, caption="Uploaded Image", use_container_width=True)
-
-    if st.button("🔍 Diagnose"):
-        with st.spinner("AI is analyzing the image..."):
-            preds = predict_image(image, model)
-
-        class_idx = np.argmax(preds)
-        confidence = preds[class_idx] * 100
-        raw_label = CLASS_NAMES[class_idx]
-
-        # =======================
-        # CONFIDENCE THRESHOLD CHECK
-        # =======================
-        CONFIDENCE_THRESHOLD = 60.0  # Ngưỡng an toàn là 60%
-
-        st.divider()
-        
-        # Nếu độ tin cậy quá thấp -> Từ chối chẩn đoán
-        if confidence < CONFIDENCE_THRESHOLD:
-            st.error("⚠️ LOW CONFIDENCE / CANNOT IDENTIFY")
-            st.write(f"AI is only **{confidence:.2f}%** confident. This may not be a leaf image or the image is too blurry.")
-            st.info("💡 Tip: Please take a clearer photo or get closer to the leaf.")
-            
-            # Vẫn hiện Top 3 để tham khảo (nhưng ghi chú rõ)
-            st.subheader("🔍 AI 'Suspected' Results (Reference Only):")
-            
-            # Không lưu vào database nếu confidence quá thấp
-        else:
-            # Nếu độ tin cậy cao -> Hiển thị kết quả bình thường
-            
-            # =======================
-            # SMART LABEL PROCESSING
-            # =======================
-            # Thay thế 3 gạch bằng 1 gạch, rồi tách
-            clean_label = raw_label.replace("___", "_")
-            parts = clean_label.split("_")
-            
-            # Lấy phần đầu làm tên cây, phần sau làm tên bệnh
-            plant_name = parts[0]
-            disease_name = " ".join(parts[1:]) if len(parts) > 1 else "Unknown"
-
-            # Xử lý healthy đặc biệt
-            if "healthy" in clean_label.lower():
-                disease_name = "Healthy"
-                st.balloons()  # Hiệu ứng balloons khi healthy
-            
-            st.success("✅ Diagnosis Complete")
-            
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric("🌱 Plant Type", plant_name)
-            with col2:
-                st.metric("🦠 Disease Status", disease_name)
-
-            st.progress(int(confidence))
-            st.caption(f"Confidence: {confidence:.2f}%")
-            
-            # Healthy / Diseased message
-            if "healthy" in disease_name.lower():
-                st.info("🎉 The plant appears to be developing well.")
-            else:
-                st.warning("⚠️ Disease detected. Please monitor and treat accordingly.")
-
-            # =======================
-            # SAVE TO DATABASE
-            # =======================
-            firebase_user_id = get_firebase_user_id()
-            
-            # Tạo dictionary predictions cho tất cả classes
-            predictions_dict = {CLASS_NAMES[i]: float(preds[i]) for i in range(len(CLASS_NAMES))}
-            
-            # Lưu vào database
-            try:
-                diagnosis_id = save_diagnosis(
-                    firebase_user_id=firebase_user_id,
-                    plant_type=plant_name,
-                    disease_status=disease_name,
-                    confidence=confidence / 100.0,  # Chuyển từ % sang 0-1
-                    predictions=predictions_dict,
-                    image_path=None  # Có thể lưu ảnh nếu cần
-                )
-                
-                if diagnosis_id:
-                    st.success(f"💾 Diagnosis saved to database (ID: {diagnosis_id})")
-                    # Cập nhật thống kê
-                    update_statistics()
-                else:
-                    st.warning("⚠️ Could not save to database. Check database connection.")
-            except Exception as e:
-                st.warning(f"⚠️ Database error: {str(e)}")
-
-        # =======================
-        # TOP-3 PREDICTIONS (ALWAYS SHOW)
-        # =======================
-        st.divider()
-        with st.expander("📊 View detailed probabilities (Top 3)", expanded=False):
-            top3_idx = preds.argsort()[-3:][::-1]
-            for i in top3_idx:
-                lbl = CLASS_NAMES[i].replace("___", " - ").replace("_", " ")
-                prob = preds[i] * 100
-                st.write(f"- **{lbl}**: {prob:.2f}%")
-
-else:
-    st.info("⬆️ Please upload an image to start diagnosis.")
-
-st.divider()
-st.caption("⚠️ This system is for academic demonstration only.")
