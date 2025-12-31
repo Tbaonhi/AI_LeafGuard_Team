@@ -6,10 +6,10 @@ COLLATE utf8mb4_unicode_ci;
 
 USE leafguard_db;
 
--- Liên kết với Firebase User ID
+-- Liên kết với Firebase User ID (có thể NULL nếu chưa có Firebase)
 CREATE TABLE IF NOT EXISTS diagnoses (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    firebase_user_id VARCHAR(128) NOT NULL,
+    firebase_user_id VARCHAR(128) DEFAULT NULL,
     image_path VARCHAR(500),
     plant_type VARCHAR(100) NOT NULL,
     disease_status VARCHAR(200) NOT NULL,

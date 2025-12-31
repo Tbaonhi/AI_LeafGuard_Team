@@ -8,3 +8,5 @@ scikit-learn
 matplotlib
 seaborn
 python-dotenv
+firebase-admin>=6.2.0
+python-dotenv>=1.0.0
