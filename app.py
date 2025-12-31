@@ -7,6 +7,18 @@ import json
 import time
 import random
 
+# --- Database Imports (with Error Handling) ---
+try:
+    from database.db_operations import save_diagnosis, get_user_diagnoses, get_statistics, update_statistics
+except ImportError:
+    # Fallback functions if database setup is missing
+    print("⚠️ Database module not found. Running in offline mode.")
+    def save_diagnosis(*args, **kwargs): return "OFFLINE_ID"
+    def get_user_diagnoses(*args, **kwargs): return []
+    def get_statistics(*args, **kwargs): return {}
+    def update_statistics(*args, **kwargs): pass
+
+
 # =======================
 # 1. SETUP PAGE
 # =======================
@@ -26,7 +38,9 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Outfit:wght@300;400;600&display=swap');
 
 :root {
+
     --neon-green: #39FF14;     /* Màu xanh Neon lá cây rực rỡ hơn */
+
     --neon-accent: #00FFA3;
     --glass-bg: rgba(10, 20, 15, 0.7);
     --glass-border: rgba(57, 255, 20, 0.3);
@@ -42,14 +56,18 @@ h1, h2, h3, .hero-text {
     text-transform: uppercase;
 }
 
+
 /* === 1. ANIMATED JUNGLE BACKGROUND === */
+
 div[data-testid="stAppViewContainer"] {
     background: radial-gradient(circle at 50% 50%, #0a2e1e 0%, #000000 100%);
     background-size: 100% 100%;
     color: var(--text-primary);
 }
 
+
 /* === 2. FALLING LEAVES ANIMATION === */
+
 .leaf {
     position: fixed;
     top: -10%;
@@ -66,6 +84,7 @@ div[data-testid="stAppViewContainer"] {
     20% { opacity: 0.5; }
     100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
+
 
 /* === 3. GLOWING TEXT FIX === */
 .glowing-text {
@@ -84,7 +103,9 @@ div[data-testid="stAppViewContainer"] {
     to { text-shadow: 0 0 30px var(--neon-accent), 0 0 10px #fff; }
 }
 
+
 /* === 4. GLASS CARDS === */
+
 .glass-card {
     background: var(--glass-bg);
     backdrop-filter: blur(16px);
@@ -98,12 +119,16 @@ div[data-testid="stAppViewContainer"] {
     z-index: 1;
 }
 
+
 /* === 5. CIRCULAR PROGRESS (UPDATED STYLE) === */
+
 .progress-container {
     position: relative;
     width: 150px;
     height: 150px;
+
     margin-left: auto; /* Align right in column */
+
 }
 
 .circular-chart {
@@ -116,23 +141,30 @@ div[data-testid="stAppViewContainer"] {
 .circle-bg {
     fill: none;
     stroke: rgba(255, 255, 255, 0.1);
+
+=======
     stroke-width: 2.5; /* Thinner background ring */
+
 }
 
 .circle {
     fill: none;
+
     stroke-width: 2.5; /* Match width */
     stroke-linecap: round;
     animation: progress 1s ease-out forwards;
     transform-origin: center;
     transform: rotate(-90deg); /* Start from top */
+
 }
 
 .percentage-text {
     fill: #fff;
     font-family: 'Rajdhani', sans-serif;
     font-weight: bold;
+
     font-size: 0.5em; /* Adjusted font size */
+
     text-anchor: middle;
     text-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
@@ -149,7 +181,9 @@ div[data-testid="stAppViewContainer"] {
     0% { stroke-dasharray: 0, 100; }
 }
 
+
 /* Info Box */
+
 .info-box {
     background: rgba(57, 255, 20, 0.1);
     border-left: 4px solid var(--neon-green);
@@ -161,7 +195,9 @@ div[data-testid="stAppViewContainer"] {
     margin-top: 15px;
 }
 
+
 /* Upload Zone */
+
 .upload-zone {
     border: 2px dashed rgba(57, 255, 20, 0.4);
     border-radius: 20px;
@@ -175,6 +211,7 @@ div[data-testid="stAppViewContainer"] {
     border-color: var(--neon-green);
     box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
 }
+
 
 /* Buttons */
 .stButton > button {
@@ -195,7 +232,9 @@ div[data-testid="stAppViewContainer"] {
     box-shadow: 0 0 30px var(--neon-green);
 }
 
+
 /* Tabs */
+
 .stTabs [data-baseweb="tab-list"] {
     background: rgba(255,255,255,0.05);
     border-radius: 16px;
@@ -243,19 +282,23 @@ def load_ai_model():
 def load_metadata():
     c_path = "models/class_indices.json"
     d_path = "data/disease_info.json"
+
     classes = []
     if os.path.exists(c_path):
         with open(c_path, 'r', encoding='utf-8') as f:
             classes = [k for k, v in sorted(json.load(f).items(), key=lambda x: x[1])]
+
     info = {}
     if os.path.exists(d_path):
         with open(d_path, 'r', encoding='utf-8') as f: info = json.load(f)
+
     return classes, info
 
 model = load_ai_model()
 CLASSES, INFO = load_metadata()
 
 def get_prediction(img, model):
+
     if not model: return None
     img = ImageOps.fit(img, (224, 224), Image.Resampling.LANCZOS)
     arr = tf.keras.applications.mobilenet_v2.preprocess_input(np.array(img)[np.newaxis, ...])
@@ -276,6 +319,7 @@ def get_prediction(img, model):
                 "cause": raw.get("cause", "Cause unknown.")
             })
     return results
+
 
 # =======================
 # 4. UI STRUCTURE
@@ -320,10 +364,12 @@ with col1:
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("INITIATE DIAGNOSIS"):
             with st.spinner("ANALYZING BIO-DATA..."):
+
                 time.sleep(1.5)
                 results = get_prediction(img, model)
                 if results:
                     st.session_state.analysis = results
+
 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -333,9 +379,11 @@ with col2:
         others = st.session_state.analysis[1:]
         
         is_safe = "healthy" in top['name'].lower()
+
         # Màu sắc động dựa trên kết quả
         accent_color = "#39FF14" if is_safe else ("#FF0055" if top['severity'] == "High" else "#FFD700")
         status_msg = "HEALTHY SPECIMEN" if is_safe else "INFECTION DETECTED"
+
 
         st.markdown(f'<div class="glass-card" style="border-top: 4px solid {accent_color};">', unsafe_allow_html=True)
         
@@ -344,6 +392,7 @@ with col2:
         with c_res1:
             st.markdown(f'<div style="color: {accent_color}; font-weight: 700; letter-spacing: 2px;">STATUS: {status_msg}</div>', unsafe_allow_html=True)
             st.markdown(f'<h2 style="font-size: 2.5rem; margin: 5px 0; color: #fff; text-shadow: 0 0 10px {accent_color};">{top["name"]}</h2>', unsafe_allow_html=True)
+
         with c_res2:
             # SVG Circular Chart Implementation
             score = top['score']
@@ -430,6 +479,7 @@ st.markdown("""
 <div style="text-align: center; margin-top: 50px; opacity: 0.4; font-size: 0.7rem; color: #fff;">
     LEAFGUARD AI v3.0 • BIO-DIGITAL INTERFACE
 </div>
+
 """, unsafe_allow_html=True)
 =======
 import streamlit as st

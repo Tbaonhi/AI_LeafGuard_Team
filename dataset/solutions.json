@@ -1,0 +1,371 @@
+{
+    "Pepper__bell___Bacterial_spot": {
+      "name_vi": "Ớt chuông - Bệnh đốm vi khuẩn (bệnh héo xanh vi khuẩn)",
+      "symptoms": [
+        "Các đốm nhỏ màu nâu sẫm hoặc đen trên lá, quả và thân",
+        "Vết bệnh có hình dạng không đều, viền nâu đậm",
+        "Vết bệnh có thể có quầng vàng xung quanh",
+        "Lá bị vàng và rụng sớm khi bệnh nặng"
+      ],
+      "why_this_disease": "Các đốm nâu sẫm không đều trên lá và quả, kèm theo viền vàng là đặc điểm điển hình của bệnh đốm vi khuẩn. Vết bệnh xuất hiện trên nhiều bộ phận của cây (lá, quả, thân) là dấu hiệu quan trọng.",
+      "cause": "Do vi khuẩn Xanthomonas campestris gây ra. Bệnh phát triển mạnh trong điều kiện ẩm ướt, mưa nhiều và nhiệt độ cao (24-30°C).",
+      "conditions": "Nhiệt độ cao (24-30°C), độ ẩm cao, mưa nhiều, lá ướt kéo dài, vết thương cơ giới trên cây.",
+      "treatment": [
+        "Cắt bỏ và tiêu hủy các lá, quả bị bệnh (đốt hoặc bỏ thùng rác, không ủ làm phân).",
+        "Phun thuốc gốc đồng (Copper-based fungicides) định kỳ 7-10 ngày/lần.",
+        "Tránh tưới phun mưa, nên tưới nhỏ giọt vào gốc để hạn chế lây lan.",
+        "Vệ sinh dụng cụ làm vườn thường xuyên bằng cồn hoặc xà phòng.",
+        "Luân canh với các cây trồng khác họ cà."
+      ],
+      "prevention": [
+        "Sử dụng hạt giống sạch bệnh hoặc xử lý hạt giống trước khi gieo.",
+        "Tránh làm tổn thương cây khi chăm sóc.",
+        "Tạo độ thông thoáng cho vườn, tránh trồng quá dày.",
+        "Tưới nước vào buổi sáng để lá khô nhanh."
+      ]
+    },
+    "Pepper__bell___healthy": {
+      "name_vi": "Ớt chuông - Cây khỏe mạnh",
+      "symptoms": [
+        "Lá xanh tươi, không có vết bệnh",
+        "Thân cây khỏe mạnh, không có dấu hiệu héo hoặc thối",
+        "Quả phát triển bình thường"
+      ],
+      "why_this_disease": "Lá cây có màu xanh tươi, không có vết đốm, thối hoặc biến dạng. Cây phát triển bình thường không có dấu hiệu bệnh.",
+      "cause": "Cây sinh trưởng tốt, không có dấu hiệu nấm hay vi khuẩn.",
+      "conditions": "Điều kiện môi trường và dinh dưỡng phù hợp.",
+      "treatment": [
+        "Tiếp tục duy trì chế độ dinh dưỡng cân đối.",
+        "Thường xuyên thăm đồng để phát hiện sớm dấu hiệu bất thường.",
+        "Tưới nước đều đặn, không để cây bị khô hạn hoặc úng nước."
+      ],
+      "prevention": [
+        "Duy trì chế độ chăm sóc hiện tại.",
+        "Bón phân cân đối, đặc biệt là Kali và Đạm.",
+        "Theo dõi thường xuyên để phát hiện sớm bệnh."
+      ]
+    },
+    "Potato___Early_blight": {
+      "name_vi": "Khoai tây - Bệnh đốm vòng (bệnh cháy sớm)",
+      "symptoms": [
+        "Vết bệnh hình bia bắn với các vòng tròn đồng tâm (vân đồng tâm)",
+        "Màu nâu sẫm hoặc đen ở trung tâm vết bệnh",
+        "Viền vàng xung quanh vết bệnh (do mô lá bị héo và chết dần)",
+        "Thường xuất hiện ở lá già phía dưới gốc trước, sau đó lây lan lên trên"
+      ],
+      "why_this_disease": "Các đốm nâu lớn với vân đồng tâm (giống mặt cắt thân cây hoặc bia bắn) là đặc điểm điển hình của bệnh đốm vòng do nấm Alternaria solani. Vị trí xuất hiện ở lá già và màu sắc vết bệnh khớp với triệu chứng của bệnh này.",
+      "cause": "Do nấm Alternaria solani. Thường xuất hiện trên lá già, khi cây thiếu dinh dưỡng hoặc chịu stress. Bệnh phát triển mạnh trong điều kiện ấm và ẩm ướt (mưa nhiều, sương mù).",
+      "conditions": "Nhiệt độ ấm (20-30°C), độ ẩm cao, mưa nhiều hoặc sương mù, cây thiếu dinh dưỡng hoặc già yếu, lá ướt kéo dài.",
+      "treatment": [
+        "Cắt tỉa: Ngắt bỏ ngay những lá bị bệnh và tiêu hủy (đốt hoặc bỏ thùng rác, không ủ làm phân).",
+        "Tưới nước đúng cách: Chỉ tưới vào gốc, tránh tưới phun mưa lên lá. Lá ướt là môi trường lý tưởng cho nấm lây lan.",
+        "Thông thoáng: Tỉa bớt cành lá rậm rạp để vườn thông thoáng, giảm độ ẩm.",
+        "Bón phân cân đối: Đặc biệt là Kali và Đạm để tăng sức đề kháng của cây.",
+        "Thuốc trừ nấm: Sử dụng Mancozeb, Chlorothalonil, Difenoconazole hoặc Azoxystrobin nếu bệnh nặng. Phun theo hướng dẫn trên bao bì."
+      ],
+      "prevention": [
+        "Luân canh với cây trồng khác họ cà ít nhất 2-3 năm.",
+        "Sử dụng giống kháng bệnh nếu có.",
+        "Vệ sinh đồng ruộng, tiêu hủy tàn dư sau thu hoạch.",
+        "Tưới nước vào buổi sáng để lá khô nhanh trong ngày.",
+        "Bón phân đầy đủ, tránh để cây thiếu dinh dưỡng."
+      ]
+    },
+    "Potato___Late_blight": {
+      "name_vi": "Khoai tây - Bệnh mốc sương (bệnh cháy muộn)",
+      "symptoms": [
+        "Vết bệnh màu xanh xám hoặc nâu đen, lan nhanh trên lá",
+        "Viền trắng mốc xuất hiện ở mặt dưới lá khi độ ẩm cao",
+        "Lá héo nhanh và chết, có mùi hôi đặc trưng",
+        "Củ bị thối nhũn, có mùi thối"
+      ],
+      "why_this_disease": "Vết bệnh lan nhanh với viền trắng mốc ở mặt dưới lá là đặc điểm điển hình của bệnh mốc sương. Đây là bệnh nguy hiểm, có thể phá hủy toàn bộ ruộng trong vài ngày.",
+      "cause": "Do nấm Phytophthora infestans. Đây là bệnh nguy hiểm, lây lan cực nhanh qua gió và nước mưa.",
+      "conditions": "Thời tiết mát (15-20°C), độ ẩm rất cao (>90%), mưa phùn, sương mù dày đặc, thiếu ánh sáng mặt trời.",
+      "treatment": [
+        "Tiêu hủy ngay tàn dư cây bệnh (đốt hoặc chôn sâu).",
+        "Phun thuốc phòng trừ nấm phổ rộng (Metalaxyl, Mancozeb) ngay khi phát hiện, đặc biệt khi thời tiết âm u, mưa phùn.",
+        "Phun thuốc định kỳ 5-7 ngày/lần trong điều kiện thời tiết thuận lợi cho bệnh.",
+        "Thu hoạch củ vào ngày khô ráo để tránh nấm xâm nhập vào củ.",
+        "Không để củ tiếp xúc với tàn dư cây bệnh."
+      ],
+      "prevention": [
+        "Sử dụng giống kháng bệnh.",
+        "Trồng với mật độ vừa phải, tạo độ thông thoáng.",
+        "Theo dõi dự báo thời tiết, phun thuốc phòng ngừa trước các đợt mưa lớn.",
+        "Vệ sinh đồng ruộng, tiêu hủy tàn dư sau thu hoạch.",
+        "Không trồng khoai tây gần cà chua hoặc các cây họ cà khác."
+      ]
+    },
+    "Potato___healthy": {
+      "name_vi": "Khoai tây - Cây khỏe mạnh",
+      "symptoms": [
+        "Lá xanh tươi, không có vết bệnh",
+        "Thân cây khỏe mạnh, không có dấu hiệu héo hoặc thối",
+        "Củ phát triển bình thường"
+      ],
+      "why_this_disease": "Lá cây có màu xanh tươi, không có vết đốm, thối hoặc biến dạng. Cây phát triển bình thường không có dấu hiệu bệnh.",
+      "cause": "Cây phát triển bình thường.",
+      "conditions": "Điều kiện môi trường và dinh dưỡng phù hợp.",
+      "treatment": [
+        "Duy trì chế độ chăm sóc hiện tại."
+      ],
+      "prevention": [
+        "Duy trì chế độ chăm sóc hiện tại.",
+        "Bón phân cân đối, đặc biệt là Kali và Đạm.",
+        "Theo dõi thường xuyên để phát hiện sớm bệnh."
+      ]
+    },
+    "Tomato___Bacterial_spot": {
+      "name_vi": "Cà chua - Bệnh đốm vi khuẩn",
+      "symptoms": [
+        "Các đốm nhỏ màu nâu sẫm hoặc đen trên lá, quả và thân",
+        "Vết bệnh có hình dạng không đều, viền nâu đậm",
+        "Vết bệnh có thể có quầng vàng xung quanh",
+        "Quả bị biến dạng và rụng sớm khi bệnh nặng"
+      ],
+      "why_this_disease": "Các đốm nâu sẫm không đều trên lá và quả, kèm theo viền vàng là đặc điểm điển hình của bệnh đốm vi khuẩn. Vết bệnh xuất hiện trên nhiều bộ phận của cây là dấu hiệu quan trọng.",
+      "cause": "Do vi khuẩn Xanthomonas. Lây lan qua hạt giống nhiễm bệnh hoặc vết thương cơ giới trên cây.",
+      "conditions": "Nhiệt độ cao (24-30°C), độ ẩm cao, mưa nhiều, lá ướt kéo dài, vết thương cơ giới trên cây.",
+      "treatment": [
+        "Sử dụng hạt giống sạch bệnh hoặc xử lý hạt giống trước khi gieo.",
+        "Phun dung dịch Bordeaux hoặc thuốc gốc đồng định kỳ 7-10 ngày/lần.",
+        "Cắt bỏ và tiêu hủy các bộ phận bị bệnh.",
+        "Vệ sinh dụng cụ cắt tỉa cành thường xuyên bằng cồn hoặc xà phòng.",
+        "Tránh tưới phun mưa, nên tưới nhỏ giọt vào gốc."
+      ],
+      "prevention": [
+        "Sử dụng hạt giống sạch bệnh.",
+        "Tránh làm tổn thương cây khi chăm sóc.",
+        "Tạo độ thông thoáng cho vườn.",
+        "Luân canh với cây trồng khác họ cà."
+      ]
+    },
+    "Tomato___Early_blight": {
+      "name_vi": "Cà chua - Bệnh đốm vòng (bệnh cháy sớm)",
+      "symptoms": [
+        "Vết bệnh hình bia bắn với các vòng tròn đồng tâm (vân đồng tâm)",
+        "Màu nâu sẫm hoặc đen ở trung tâm vết bệnh",
+        "Viền vàng xung quanh vết bệnh",
+        "Gây hại chủ yếu trên lá già gần gốc, sau đó lan lên trên"
+      ],
+      "why_this_disease": "Các đốm nâu lớn với vân đồng tâm (giống mặt cắt thân cây hoặc bia bắn) là đặc điểm điển hình của bệnh đốm vòng. Vị trí xuất hiện ở lá già gần gốc và màu sắc vết bệnh khớp với triệu chứng của bệnh này.",
+      "cause": "Do nấm Alternaria solani. Gây hại chủ yếu trên lá già gần gốc. Bệnh phát triển mạnh trong điều kiện ấm và ẩm ướt.",
+      "conditions": "Nhiệt độ ấm (20-30°C), độ ẩm cao, mưa nhiều, lá ướt kéo dài, cây thiếu dinh dưỡng.",
+      "treatment": [
+        "Tỉa bỏ lá già gần gốc để tạo độ thông thoáng và loại bỏ nguồn bệnh.",
+        "Sử dụng thuốc trừ nấm sinh học hoặc hóa học (Difenoconazole, Mancozeb, Chlorothalonil).",
+        "Sử dụng màng phủ nông nghiệp để ngăn nấm từ đất bắn lên lá.",
+        "Bón phân cân đối, đặc biệt là Kali và Đạm.",
+        "Tưới nước vào buổi sáng để lá khô nhanh trong ngày."
+      ],
+      "prevention": [
+        "Luân canh với cây trồng khác họ cà.",
+        "Sử dụng giống kháng bệnh nếu có.",
+        "Vệ sinh đồng ruộng, tiêu hủy tàn dư sau thu hoạch.",
+        "Tưới nước vào buổi sáng, tránh tưới phun mưa lên lá.",
+        "Bón phân đầy đủ, tránh để cây thiếu dinh dưỡng."
+      ]
+    },
+    "Tomato___Late_blight": {
+      "name_vi": "Cà chua - Bệnh mốc sương",
+      "symptoms": [
+        "Vết bệnh màu xanh xám hoặc nâu đen, lan nhanh trên lá",
+        "Viền trắng mốc xuất hiện ở mặt dưới lá khi độ ẩm cao",
+        "Lá héo nhanh và chết, có mùi hôi đặc trưng",
+        "Quả bị thối nhũn, có mùi thối"
+      ],
+      "why_this_disease": "Vết bệnh lan nhanh với viền trắng mốc ở mặt dưới lá là đặc điểm điển hình của bệnh mốc sương. Đây là bệnh nguy hiểm, có thể phá hủy toàn bộ vườn trong vài ngày.",
+      "cause": "Do nấm Phytophthora infestans. Bệnh điển hình trong thời tiết mát và ẩm.",
+      "conditions": "Thời tiết mát (15-20°C), độ ẩm rất cao (>90%), mưa phùn, sương mù dày đặc, thiếu ánh sáng mặt trời.",
+      "treatment": [
+        "Thăm vườn thường xuyên, ngắt bỏ lá bệnh và tiêu hủy ngay.",
+        "Phun thuốc phòng ngừa trước các đợt mưa lớn (Metalaxyl, Mancozeb).",
+        "Phun thuốc định kỳ 5-7 ngày/lần trong điều kiện thời tiết thuận lợi cho bệnh.",
+        "Không trồng cà chua gần ruộng khoai tây nhiễm bệnh.",
+        "Tạo độ thông thoáng cho vườn, tránh trồng quá dày."
+      ],
+      "prevention": [
+        "Sử dụng giống kháng bệnh.",
+        "Theo dõi dự báo thời tiết, phun thuốc phòng ngừa trước các đợt mưa lớn.",
+        "Vệ sinh đồng ruộng, tiêu hủy tàn dư sau thu hoạch.",
+        "Không trồng cà chua gần khoai tây hoặc các cây họ cà khác.",
+        "Tưới nước vào buổi sáng, tránh tưới phun mưa lên lá."
+      ]
+    },
+    "Tomato___Leaf_Mold": {
+      "name_vi": "Cà chua - Bệnh nấm mốc lá",
+      "symptoms": [
+        "Lớp mốc màu vàng xanh hoặc xám xuất hiện ở mặt dưới lá",
+        "Mặt trên lá có các đốm vàng không đều",
+        "Lá bị vàng và rụng sớm khi bệnh nặng",
+        "Thường xuất hiện trong nhà kính hoặc nơi có độ ẩm cao"
+      ],
+      "why_this_disease": "Lớp mốc màu vàng xanh hoặc xám ở mặt dưới lá kèm theo đốm vàng ở mặt trên là đặc điểm điển hình của bệnh mốc lá. Bệnh thường xuất hiện trong môi trường có độ ẩm cao và thông gió kém.",
+      "cause": "Do nấm Passalora fulva. Thường gặp trong nhà kính có độ ẩm cao và thông gió kém.",
+      "conditions": "Độ ẩm cao (>85%), thông gió kém, nhiệt độ ấm (20-25°C), lá ướt kéo dài, thiếu ánh sáng.",
+      "treatment": [
+        "Tăng cường thông gió, giảm độ ẩm không khí (mở cửa, quạt gió).",
+        "Sử dụng thuốc trừ nấm (Chlorothalonil, Mancozeb) nếu bệnh nặng, phun định kỳ 7-10 ngày/lần.",
+        "Tưới nước vào buổi sáng để lá khô nhanh.",
+        "Tỉa bỏ lá bị bệnh nặng để giảm nguồn bệnh.",
+        "Giảm mật độ trồng để tăng thông gió."
+      ],
+      "prevention": [
+        "Tăng cường thông gió trong nhà kính hoặc vườn.",
+        "Giảm độ ẩm không khí bằng cách mở cửa, sử dụng quạt gió.",
+        "Tưới nước vào buổi sáng, tránh tưới phun mưa lên lá.",
+        "Trồng với mật độ vừa phải, tạo độ thông thoáng.",
+        "Sử dụng giống kháng bệnh nếu có."
+      ]
+    },
+    "Tomato___Septoria_leaf_spot": {
+      "name_vi": "Cà chua - Bệnh đốm lá Septoria (Đốm mắt cua)",
+      "symptoms": [
+        "Các đốm nhỏ màu nâu sẫm hoặc đen, hình tròn hoặc không đều",
+        "Trung tâm vết bệnh có thể có màu xám nhạt",
+        "Vết bệnh có thể hợp lại thành mảng lớn",
+        "Lá bị vàng và rụng sớm, bắt đầu từ lá già phía dưới"
+      ],
+      "why_this_disease": "Các đốm nhỏ màu nâu sẫm với trung tâm xám nhạt là đặc điểm điển hình của bệnh đốm lá Septoria. Bệnh thường bắt đầu từ lá già phía dưới và lan dần lên trên.",
+      "cause": "Do nấm Septoria lycopersici. Phát triển mạnh khi mưa nhiều.",
+      "conditions": "Mưa nhiều, độ ẩm cao, lá ướt kéo dài, nhiệt độ ấm (20-25°C), thiếu thông thoáng.",
+      "treatment": [
+        "Dọn sạch cỏ dại xung quanh gốc để giảm nguồn bệnh.",
+        "Sử dụng thuốc gốc đồng hoặc Mancozeb, phun định kỳ 7-10 ngày/lần.",
+        "Tỉa bỏ lá bị bệnh nặng và tiêu hủy.",
+        "Tưới nước vào buổi sáng, tránh tưới phun mưa lên lá.",
+        "Tạo độ thông thoáng cho vườn."
+      ],
+      "prevention": [
+        "Luân canh cây trồng ít nhất 1 năm.",
+        "Vệ sinh đồng ruộng, tiêu hủy tàn dư sau thu hoạch.",
+        "Dọn sạch cỏ dại xung quanh gốc.",
+        "Tưới nước vào buổi sáng, tránh tưới phun mưa lên lá.",
+        "Sử dụng giống kháng bệnh nếu có."
+      ]
+    },
+    "Tomato___Spider_mites Two-spotted_spider_mite": {
+      "name_vi": "Cà chua - Nhện đỏ 2 chấm (Nhện chăng tơ)",
+      "symptoms": [
+        "Lá bị vàng, có đốm nhỏ màu vàng hoặc trắng",
+        "Có thể thấy mạng nhện mỏng trên lá và thân",
+        "Lá bị khô và rụng sớm",
+        "Cây phát triển kém, quả nhỏ"
+      ],
+      "why_this_disease": "Lá bị vàng với đốm nhỏ kèm theo mạng nhện mỏng là đặc điểm điển hình của nhện đỏ. Bệnh thường xuất hiện trong điều kiện khô nóng.",
+      "cause": "Do nhện đỏ hút nhựa cây. Thường bùng phát trong điều kiện khô nóng.",
+      "conditions": "Thời tiết khô nóng, độ ẩm thấp, thiếu nước, thiếu thiên địch.",
+      "treatment": [
+        "Tưới phun mưa để rửa trôi nhện (nhưng chỉ khi thời tiết khô ráo).",
+        "Sử dụng thiên địch (như bọ rùa, bọ xít bắt mồi) hoặc dầu khoáng sinh học.",
+        "Nếu nặng, dùng thuốc đặc trị nhện (Abamectin, Spiromesifen) nhưng hạn chế để bảo vệ thiên địch.",
+        "Tăng độ ẩm bằng cách tưới nước thường xuyên hơn.",
+        "Tỉa bỏ lá bị hại nặng."
+      ],
+      "prevention": [
+        "Tưới nước đều đặn, tránh để cây bị khô hạn.",
+        "Tăng độ ẩm trong vườn bằng cách tưới phun mưa nhẹ (khi thời tiết khô ráo).",
+        "Bảo vệ thiên địch bằng cách hạn chế sử dụng thuốc trừ sâu phổ rộng.",
+        "Theo dõi thường xuyên để phát hiện sớm nhện đỏ.",
+        "Vệ sinh đồng ruộng, tiêu hủy tàn dư sau thu hoạch."
+      ]
+    },
+    "Tomato___Target_Spot": {
+      "name_vi": "Cà chua - Bệnh đốm đích (Đốm vòng Corynespora)",
+      "symptoms": [
+        "Vết bệnh có vòng đồng tâm như bia bắn (giống Early blight nhưng nhỏ hơn)",
+        "Màu nâu sẫm ở trung tâm, viền vàng xung quanh",
+        "Vết bệnh có thể xuất hiện trên lá, thân và quả",
+        "Lá bị vàng và rụng sớm khi bệnh nặng"
+      ],
+      "why_this_disease": "Vết bệnh có vòng đồng tâm như bia bắn là đặc điểm điển hình của bệnh đốm đích. Vết bệnh nhỏ hơn Early blight nhưng có hình dạng tương tự.",
+      "cause": "Do nấm Corynespora cassiicola. Gây ra các vết bệnh có vòng đồng tâm như bia bắn.",
+      "conditions": "Nhiệt độ ấm (20-30°C), độ ẩm cao, mưa nhiều, lá ướt kéo dài, thiếu thông thoáng.",
+      "treatment": [
+        "Tăng độ thông thoáng cho vườn bằng cách tỉa bớt cành lá rậm rạp.",
+        "Phun thuốc trừ nấm chứa Azoxystrobin, Mancozeb hoặc Chlorothalonil, phun định kỳ 7-10 ngày/lần.",
+        "Tỉa bỏ lá bị bệnh nặng và tiêu hủy.",
+        "Tiêu hủy tàn dư thực vật sau mùa vụ.",
+        "Tưới nước vào buổi sáng, tránh tưới phun mưa lên lá."
+      ],
+      "prevention": [
+        "Luân canh với cây trồng khác họ cà.",
+        "Vệ sinh đồng ruộng, tiêu hủy tàn dư sau thu hoạch.",
+        "Tạo độ thông thoáng cho vườn.",
+        "Tưới nước vào buổi sáng, tránh tưới phun mưa lên lá.",
+        "Sử dụng giống kháng bệnh nếu có."
+      ]
+    },
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+      "name_vi": "Cà chua - Bệnh virus xoăn vàng lá",
+      "symptoms": [
+        "Lá bị xoăn lại, cong lên trên",
+        "Lá có màu vàng hoặc xanh nhạt",
+        "Cây phát triển còi cọc, thấp lùn",
+        "Quả nhỏ hoặc không phát triển"
+      ],
+      "why_this_disease": "Lá bị xoăn lại và có màu vàng kèm theo cây phát triển còi cọc là đặc điểm điển hình của virus xoăn vàng lá. Đây là bệnh do virus, không có thuốc chữa.",
+      "cause": "Do Virus TYLCV, lây truyền chủ yếu qua Bọ phấn trắng (Whitefly).",
+      "conditions": "Có bọ phấn trắng trong vườn, nhiệt độ cao, thiếu biện pháp phòng trừ côn trùng.",
+      "treatment": [
+        "Nhổ bỏ và tiêu hủy cây bị bệnh ngay lập tức (đốt hoặc chôn sâu) vì không có thuốc chữa virus.",
+        "Diệt trừ bọ phấn trắng (vật trung gian truyền bệnh) bằng thuốc trừ sâu hoặc thiên địch.",
+        "Sử dụng bẫy dính màu vàng để bắt bọ phấn trắng.",
+        "Phun thuốc trừ sâu (Imidacloprid, Thiamethoxam) để diệt bọ phấn trắng.",
+        "Sử dụng lưới chắn côn trùng để bảo vệ cây."
+      ],
+      "prevention": [
+        "Sử dụng giống kháng bệnh.",
+        "Diệt trừ bọ phấn trắng bằng thuốc trừ sâu hoặc thiên địch.",
+        "Sử dụng lưới chắn côn trùng để bảo vệ cây.",
+        "Vệ sinh đồng ruộng, tiêu hủy tàn dư sau thu hoạch.",
+        "Tránh trồng cà chua gần các cây trồng khác có bọ phấn trắng."
+      ]
+    },
+    "Tomato___Tomato_mosaic_virus": {
+      "name_vi": "Cà chua - Bệnh virus khảm",
+      "symptoms": [
+        "Lá có màu xanh đậm và xanh nhạt xen kẽ tạo thành hoa văn khảm",
+        "Lá bị biến dạng, nhăn nheo",
+        "Cây phát triển còi cọc",
+        "Quả có thể bị biến dạng, có vết loang lổ"
+      ],
+      "why_this_disease": "Lá có hoa văn khảm (xanh đậm và xanh nhạt xen kẽ) kèm theo biến dạng là đặc điểm điển hình của virus khảm lá. Đây là bệnh do virus, không có thuốc chữa.",
+      "cause": "Do Virus ToMV. Lây lan qua tiếp xúc cơ giới (tay người, dụng cụ) và hạt giống.",
+      "conditions": "Tiếp xúc cơ giới (tay người, dụng cụ), hạt giống nhiễm bệnh, thiếu vệ sinh.",
+      "treatment": [
+        "Nhổ bỏ và tiêu hủy cây bị bệnh ngay lập tức (đốt hoặc chôn sâu) vì không có thuốc chữa virus.",
+        "Khử trùng dụng cụ làm vườn bằng cồn hoặc xà phòng sau mỗi lần sử dụng.",
+        "Rửa tay sạch sẽ trước khi tiếp xúc với cây (đặc biệt nếu bạn hút thuốc lá).",
+        "Sử dụng hạt giống sạch bệnh hoặc xử lý hạt giống trước khi gieo.",
+        "Tránh tiếp xúc với cây khi tay bẩn hoặc sau khi hút thuốc."
+      ],
+      "prevention": [
+        "Sử dụng hạt giống sạch bệnh.",
+        "Khử trùng dụng cụ làm vườn thường xuyên.",
+        "Rửa tay sạch sẽ trước khi tiếp xúc với cây.",
+        "Tránh hút thuốc lá khi làm vườn.",
+        "Vệ sinh đồng ruộng, tiêu hủy tàn dư sau thu hoạch."
+      ]
+    },
+    "Tomato___healthy": {
+      "name_vi": "Cà chua - Cây khỏe mạnh",
+      "symptoms": [
+        "Lá xanh tươi, không có vết bệnh",
+        "Thân cây khỏe mạnh, không có dấu hiệu héo hoặc thối",
+        "Quả phát triển bình thường"
+      ],
+      "why_this_disease": "Lá cây có màu xanh tươi, không có vết đốm, thối hoặc biến dạng. Cây phát triển bình thường không có dấu hiệu bệnh.",
+      "cause": "Cây sinh trưởng tốt.",
+      "conditions": "Điều kiện môi trường và dinh dưỡng phù hợp.",
+      "treatment": [
+        "Duy trì chế độ chăm sóc."
+      ],
+      "prevention": [
+        "Duy trì chế độ chăm sóc hiện tại.",
+        "Bón phân cân đối, đặc biệt là Kali và Đạm.",
+        "Theo dõi thường xuyên để phát hiện sớm bệnh."
+      ]
+    }
+  }
