@@ -4,7 +4,6 @@ from src.auth_manager import AuthManager
 from database.firestore_manager import FirestoreManager
 from src.utils import get_solution
 
-
 #Inject bio-digital theme CSS
 def inject_theme_css():
     """Inject bio-digital theme CSS"""
@@ -12,7 +11,6 @@ def inject_theme_css():
     <style>
     /* IMPORT FONTS */
     @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Outfit:wght@300;400;600&display=swap');
-
 
     :root {
         --neon-green: #39FF14;
@@ -22,17 +20,14 @@ def inject_theme_css():
         --text-primary: #F0FFF0;
     }
 
-
     * {
         font-family: 'Outfit', sans-serif;
     }
-
 
     h1, h2, h3, .hero-text {
         font-family: 'Rajdhani', sans-serif !important;
         text-transform: uppercase;
     }
-
 
     /* ANIMATED JUNGLE BACKGROUND */
     div[data-testid="stAppViewContainer"] {
@@ -40,7 +35,6 @@ def inject_theme_css():
         background-size: 100% 100%;
         color: var(--text-primary);
     }
-
 
     /* FALLING LEAVES ANIMATION */
     .leaf {
@@ -54,32 +48,28 @@ def inject_theme_css():
         font-size: 20px;
     }
 
-
     @keyframes falling {
         0% { transform: translateY(0) rotate(0deg); opacity: 0; }
         20% { opacity: 0.5; }
         100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
 
-
     /* GLOWING TEXT */
     .glowing-text {
         font-size: 5rem;
         font-weight: 800;
         color: #fff;
-        text-shadow:
-            0 0 10px #000,
-            0 0 20px var(--neon-green),
+        text-shadow: 
+            0 0 10px #000, 
+            0 0 20px var(--neon-green), 
             0 0 40px var(--neon-green);
         animation: pulseText 3s infinite alternate;
     }
-
 
     @keyframes pulseText {
         from { text-shadow: 0 0 20px var(--neon-green); }
         to { text-shadow: 0 0 30px var(--neon-accent), 0 0 10px #fff; }
     }
-
 
     /* GLASS CARDS */
     .glass-card {
@@ -95,7 +85,6 @@ def inject_theme_css():
         z-index: 1;
     }
 
-
     /* CIRCULAR PROGRESS */
     .progress-container {
         position: relative;
@@ -104,7 +93,6 @@ def inject_theme_css():
         margin-left: auto;
     }
 
-
     .circular-chart {
         display: block;
         margin: 0 auto;
@@ -112,13 +100,11 @@ def inject_theme_css():
         max-height: 100%;
     }
 
-
     .circle-bg {
         fill: none;
         stroke: rgba(255, 255, 255, 0.1);
         stroke-width: 2.5;
     }
-
 
     .circle {
         fill: none;
@@ -129,7 +115,6 @@ def inject_theme_css():
         transform: rotate(-90deg);
     }
 
-
     .percentage-text {
         fill: #fff;
         font-family: 'Rajdhani', sans-serif;
@@ -139,7 +124,6 @@ def inject_theme_css():
         text-shadow: 0 0 5px rgba(0,0,0,0.5);
     }
 
-
     .label-text {
         fill: #fff;
         font-family: 'Outfit', sans-serif;
@@ -148,11 +132,9 @@ def inject_theme_css():
         opacity: 0.7;
     }
 
-
     @keyframes progress {
         0% { stroke-dasharray: 0, 100; }
     }
-
 
     /* Info Box */
     .info-box {
@@ -165,7 +147,6 @@ def inject_theme_css():
         line-height: 1.6;
         margin-top: 15px;
     }
-
 
     /* Upload Zone */
     .upload-zone {
@@ -181,7 +162,6 @@ def inject_theme_css():
         border-color: var(--neon-green);
         box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
     }
-
 
     /* Camera Input Styling */
     div[data-testid="stCameraInput"] {
@@ -200,7 +180,6 @@ def inject_theme_css():
         border-radius: 12px !important;
     }
 
-
     /* File Uploader Styling */
     div[data-testid="stFileUploader"] {
         border: 2px dashed rgba(57, 255, 20, 0.4) !important;
@@ -214,7 +193,6 @@ def inject_theme_css():
         background: rgba(57, 255, 20, 0.1) !important;
         box-shadow: 0 0 20px rgba(57, 255, 20, 0.2) !important;
     }
-
 
     /* Buttons */
     .stButton > button {
@@ -234,7 +212,6 @@ def inject_theme_css():
         color: #000;
         box-shadow: 0 0 30px var(--neon-green);
     }
-
 
     /* Tabs */
     .stTabs [data-baseweb="tab-list"] {
@@ -256,12 +233,10 @@ def inject_theme_css():
         border: 1px solid var(--neon-green);
     }
 
-
     div[data-testid="stHeader"], footer { display: none; }
     .block-container { padding-top: 2rem; max-width: 1400px; }
     </style>
     """, unsafe_allow_html=True)
-
 
 def inject_falling_leaves():
     """Inject falling leaves animation"""
@@ -274,7 +249,6 @@ def inject_falling_leaves():
         leaves_html += f'<div class="leaf" style="left: {left}%; animation-delay: {delay}s; animation-duration: {duration}s;">{icon}</div>'
     st.markdown(leaves_html, unsafe_allow_html=True)
 
-
 def render_hero_header():
     """Render hero header with glowing text"""
     st.markdown("""
@@ -285,7 +259,6 @@ def render_hero_header():
         </p>
     </div>
     """, unsafe_allow_html=True)
-
 
 # Render sidebar
 def render_sidebar(auth_manager: AuthManager, firestore: FirestoreManager):
@@ -308,16 +281,15 @@ def get_confidence_level(confidence: float) -> str:
     else:
         return "Tôi chưa chắc chắn. Bạn nên chụp ảnh rõ hơn hoặc tham khảo ý kiến của các chuyên gia để chữa bệnh cho cây."
 
-
 # Render diagnosis result with new styling
 def render_diagnosis_result(plant_name: str, disease_name: str, confidence: float, is_healthy: bool, raw_label: str = None):
     """Render diagnosis result with bio-digital styling"""
     # Determine accent color
     accent_color = "#39FF14" if is_healthy else ("#FF0055" if confidence < 60 else "#FFD700")
     status_msg = "KHỎE MẠNH" if is_healthy else "PHÁT HIỆN BỆNH"
-   
+    
     st.markdown(f'<div class="glass-card" style="border-top: 4px solid {accent_color};">', unsafe_allow_html=True)
-   
+    
     # Result Header with SVG Circle Chart
     c_res1, c_res2 = st.columns([2, 1])
     with c_res1:
@@ -347,33 +319,31 @@ def render_diagnosis_result(plant_name: str, disease_name: str, confidence: floa
             </svg>
         </div>
         """, unsafe_allow_html=True)
-   
+    
     # Confidence description
     confidence_desc = get_confidence_level(confidence)
     st.markdown(f'<div class="info-box" style="border-left-color: {accent_color}; margin-top: 15px;">{confidence_desc}</div>', unsafe_allow_html=True)
-   
+    
     st.divider()
-   
+    
     # Render solution if available
     if raw_label:
         render_solution(raw_label, is_healthy, accent_color)
-   
+    
     st.markdown('</div>', unsafe_allow_html=True)
-
-
 
 
 # Render solution (cause and treatment) with new styling
 def render_solution(raw_label: str, is_healthy: bool, accent_color: str = "#39FF14"):
     """Render solution information with bio-digital styling"""
     solution = get_solution(raw_label)
-   
+    
     if not solution:
         return
-   
+    
     # Tabs for organized display - Thứ tự: Dấu hiệu | Nguyên Nhân | Điều Trị | Phòng ngừa
     t1, t2, t3, t4 = st.tabs(["🔬 DẤU HIỆU", "🧬 NGUYÊN NHÂN", "💊 ĐIỀU TRỊ", "🛡️ PHÒNG NGỪA"])
-   
+    
     with t1:  # Symptoms
         st.markdown("<br>", unsafe_allow_html=True)
         if solution.get('symptoms') and isinstance(solution['symptoms'], list):
@@ -385,10 +355,10 @@ def render_solution(raw_label: str, is_healthy: bool, accent_color: str = "#39FF
                     <div style="color: #F0FFF0; line-height: 1.6;">{symptom}</div>
                 </div>
                 """, unsafe_allow_html=True)
-       
+        
         if solution.get('why_this_disease'):
             st.markdown(f'<div class="info-box" style="border-left-color: {accent_color}; margin-top: 20px;">{solution["why_this_disease"]}</div>', unsafe_allow_html=True)
-   
+    
     with t2:  # Cause
         st.markdown("<br>", unsafe_allow_html=True)
         if solution.get('cause'):
@@ -398,7 +368,7 @@ def render_solution(raw_label: str, is_healthy: bool, accent_color: str = "#39FF
                 {solution['cause']}
             </div>
             """, unsafe_allow_html=True)
-           
+            
             if solution.get('conditions'):
                 st.markdown(f"""
                 <div class="info-box" style="margin-top: 15px;">
@@ -406,7 +376,7 @@ def render_solution(raw_label: str, is_healthy: bool, accent_color: str = "#39FF
                     {solution['conditions']}
                 </div>
                 """, unsafe_allow_html=True)
-   
+    
     with t3:  # Treatment
         st.markdown("<br>", unsafe_allow_html=True)
         if is_healthy:
@@ -421,7 +391,7 @@ def render_solution(raw_label: str, is_healthy: bool, accent_color: str = "#39FF
                         <div style="color: #F0FFF0; line-height: 1.6;">{treatment}</div>
                     </div>
                     """, unsafe_allow_html=True)
-   
+    
     with t4:  # Prevention
         st.markdown("<br>", unsafe_allow_html=True)
         if solution.get('prevention') and isinstance(solution['prevention'], list):
@@ -434,15 +404,13 @@ def render_solution(raw_label: str, is_healthy: bool, accent_color: str = "#39FF
                 """, unsafe_allow_html=True)
 
 
-
-
 # Render top 3 predictions with new styling
 def render_top3_predictions(preds, class_names, top_plant_type=None, accent_color: str = "#39FF14"):
     from src.utils import get_plant_type_from_label, process_label
-   
+    
     # Collect predictions first
     predictions_to_show = []
-   
+    
     if top_plant_type:
         filtered_predictions = []
         for i, class_name in enumerate(class_names):
@@ -450,27 +418,27 @@ def render_top3_predictions(preds, class_names, top_plant_type=None, accent_colo
             conf = preds[i] * 100
             if plant_type == top_plant_type and conf >= 40.0:
                 filtered_predictions.append((i, class_name, conf))
-       
+        
         filtered_predictions.sort(key=lambda x: x[2], reverse=True)
         top3_filtered = filtered_predictions[:3]
-       
+        
         if len(top3_filtered) == 0:
-            same_plant_predictions = [(i, class_names[i], preds[i] * 100)
+            same_plant_predictions = [(i, class_names[i], preds[i] * 100) 
                                       for i in range(len(class_names))
                                       if get_plant_type_from_label(class_names[i]) == top_plant_type]
             same_plant_predictions.sort(key=lambda x: x[2], reverse=True)
             top3_filtered = same_plant_predictions[:3]
-       
+        
         predictions_to_show = top3_filtered
     else:
         # Fallback: show top 3 without filtering
         top3_idx = preds.argsort()[-3:][::-1]
         predictions_to_show = [(i, class_names[i], preds[i] * 100) for i in top3_idx]
-   
+    
     # Only render if we have predictions to show
     if predictions_to_show:
         st.markdown(f'<h3 style="color: {accent_color}; margin-bottom: 20px;">CHI TIẾT XÁC SUẤT</h3>', unsafe_allow_html=True)
-       
+        
         for idx, class_name, prob in predictions_to_show:
             plant_name, disease_name = process_label(class_name)
             lbl = f"{plant_name} - {disease_name}"
@@ -485,3 +453,4 @@ def render_top3_predictions(preds, class_names, top_plant_type=None, accent_colo
                 </div>
             </div>
             """, unsafe_allow_html=True)
+
