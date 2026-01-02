@@ -243,7 +243,7 @@ If you want to retrain the model:
 
 ## 👥 Team
 
-| Member | Role | Responsibilities |
+| Member | Responsibilities |
 |--------|------|------------------|
 | **Trương Tuyết Trinh**  | Dataset Setup, Model Training, Database Operations |
 | **Trần Bảo Nhi**  | Data Cleaning, Firebase Integration, Authentication |
