@@ -21,7 +21,6 @@ from src.diagnosis_handler import handle_diagnosis
 from src.utils import get_plant_type_from_label
 from src.camera_input import get_image_input
 
-
 st.set_page_config(
     page_title="AI Chẩn Đoán Bệnh Cây Trồng",
     page_icon="🌿",
@@ -33,17 +32,9 @@ st.set_page_config(
 inject_theme_css()
 inject_falling_leaves()
 
-
 auth_manager = AuthManager()
 auth_manager.init_session_state()
 firestore = FirestoreManager()
-
-
-render_hero_header()
-
-
-render_sidebar(auth_manager, firestore)
-
 
 @st.cache_resource
 def load_model():
