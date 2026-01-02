@@ -1,122 +1,276 @@
-# LeafGuard: Hệ thống Phân loại Bệnh Cây từ Ảnh Lá
+# 🌿 LeafGuard AI - Plant Disease Classification System
 
-## Tổng quan Dự án
+<div align="center">
 
-**1. AI Problem Definition:**
-- Ý tưởng AI : Phân loại bệnh cây từ ảnh lá cây (Nhận diện bệnh cây)
-Phát hiện bệnh cây giúp nông dân chẩn đoán sớm → tăng năng suất, giảm chi phí.
-Đây là một trong những ứng dụng AI phổ biến nhất trong nông nghiệp thông minh (AgriTech).
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.x-red.svg)
+![Firebase](https://img.shields.io/badge/Firebase-Firestore-yellow.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-**2. Problem Statement & Research Question:**
-- Problem Statement :
-   Bệnh trên lá cây là một trong những nguyên nhân gây suy giảm năng suất và chất lượng nông sản, đặc biệt tại các khu vực nông nghiệp quy mô nhỏ. Việc phát hiện bệnh chủ yếu dựa vào quan sát thủ công của nông dân, vốn dễ nhầm lẫn, tốn thời gian và phụ thuộc nhiều vào kinh nghiệm cá nhân. Điều này dẫn đến chẩn đoán chậm trễ, sử dụng sai thuốc và thiệt hại kinh tế đáng kể.
-   Dự án này nhằm xây dựng một mô hình học sâu có khả năng nhận diện và phân loại bệnh cây dựa trên hình ảnh lá, giúp tự động hóa quá trình chẩn đoán, hỗ trợ nông dân phát hiện bệnh sớm và đưa ra quyết định xử lý kịp thời. Mục tiêu là phát triển một giải pháp AI có độ chính xác cao, dễ triển khai và phù hợp với điều kiện thực tế của lĩnh vực nông nghiệp.
+**An AI-powered plant disease detection system using Deep Learning**
 
-Dự án LeaffGuard sử dụng mô hình Học Sâu (Deep Learning) **MobileNetV2** (áp dụng Transfer Learning) để tự động nhận diện và phân loại bệnh dựa trên hình ảnh lá cây. Mục tiêu cuối cùng là cung cấp một giải pháp chẩn đoán sớm, chính xác, dễ dàng triển khai trên thiết bị di động (sử dụng TFLite) để hỗ trợ nông dân nâng cao năng suất cây trồng.
+[Demo](#demo) • [Features](#features) • [Installation](#installation) • [Usage](#usage) • [Team](#team)
 
-**Mục tiêu Chính:** Xây dựng mô hình phân loại đa lớp (38 Class) đạt **F1-Score trên 90%** trên tập dữ liệu kiểm thử.
+</div>
 
------
+---
 
-## Tính năng & Kết quả mong đợi
+## 📋 Table of Contents
 
-  * **Phân loại Ảnh Lá:** Nhận diện và phân loại 38 lớp (loại cây và bệnh) khác nhau từ dataset PlantVillage.
-  * **Transfer Learning:** Sử dụng kiến trúc **MobileNetV2** đã được huấn luyện trước trên ImageNet để đạt độ chính xác cao trong thời gian huấn luyện ngắn.
-  * **Tối ưu hóa Mobile:** Chuyển đổi mô hình sang định dạng **TensorFlow Lite (TFLite)** và áp dụng **Quantization** để giảm kích thước và tăng tốc độ suy luận, chuẩn bị cho việc triển khai trên thiết bị di động.
-  * **Tài liệu Hóa:** Cung cấp đầy đủ **Data Pipeline Flowchart** và **Model Architecture Diagram** trong thư mục `docs/`.
+- [Overview](#overview)
+- [Problem Statement](#problem-statement)
+- [Features](#features)
+- [Model Performance](#model-performance)
+- [Technologies](#technologies)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Dataset](#dataset)
+- [Team](#team)
 
------
+---
 
-## Công nghệ và Thư viện (Technologies)
+## 🎯 Overview
 
-| Lĩnh vực | Công nghệ | Mục đích |
-| :--- | :--- | :--- |
-| **Model Development** | TensorFlow, Keras | Xây dựng, huấn luyện và quản lý mô hình Deep Learning. |
-| **Data Processing** | NumPy, Pandas, Matplotlib | Tiền xử lý dữ liệu, Data Augmentation và trực quan hóa kết quả. |
-| **Model Optimization** | TensorFlow Lite (TFLite) | Tối ưu hóa mô hình cho triển khai trên thiết bị di động (RQ4). |
-| **Version Control** | Git, GitHub | Cộng tác nhóm, theo dõi lịch sử và quản lý mã nguồn. |
+**LeafGuard AI** is a deep learning-based system that automatically identifies and classifies plant diseases from leaf images. The system uses **MobileNetV2** with **Transfer Learning** to achieve high accuracy while maintaining a lightweight architecture suitable for mobile deployment.
 
------
+### Key Objectives:
+- Build a multi-class classification model (15 classes) achieving **F1-Score > 90%**
+- Provide an intuitive web interface for farmers and agricultural workers
+- Enable early disease detection to improve crop yields and reduce losses
 
-## Cấu trúc Dự án (Repository Structure)
-(có thể thay đổi trong quá trình làm dự án)
+---
+
+## 🔬 Problem Statement
+
+Plant diseases cause significant crop yield reduction, especially in small-scale farming areas. Traditional disease detection relies on manual observation, which is:
+- Time-consuming and error-prone
+- Dependent on individual expertise
+- Often results in delayed diagnosis
+
+**Our Solution:** An AI-powered system that provides instant, accurate disease diagnosis from leaf images, helping farmers detect diseases early and take appropriate action.
+
+### Research Questions:
+1. How to efficiently collect and preprocess diverse leaf image data?
+2. Which deep learning model is best suited for leaf disease classification?
+3. What evaluation metrics should be prioritized for imbalanced datasets?
+4. How to optimize the model for mobile deployment?
+5. What ethical considerations arise when deploying AI in agriculture?
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| 🔍 **Disease Detection** | Upload or capture leaf images for instant diagnosis |
+| 📊 **Confidence Scores** | View prediction confidence and top-3 alternatives |
+| 💊 **Treatment Recommendations** | Get detailed treatment, prevention, and care information |
+| 👤 **User Authentication** | Secure login/registration via Firebase |
+| 📈 **Diagnosis History** | Track past diagnoses and view statistics |
+| 🎨 **Modern UI** | Bio-digital themed interface with smooth animations |
+
+---
+
+## 📈 Model Performance
+
+Our trained model achieves excellent performance on the test dataset:
+
+| Metric | Score |
+|--------|-------|
+| **Accuracy** | 91.07% |
+| **Macro F1-Score** | 90.09% |
+| **Macro Precision** | 90.59% |
+| **Macro Recall** | 89.95% |
+
+### Supported Classes (15):
+
+| Plant | Diseases |
+|-------|----------|
+| **Pepper Bell** | Bacterial Spot, Healthy |
+| **Potato** | Early Blight, Late Blight, Healthy |
+| **Tomato** | Bacterial Spot, Early Blight, Late Blight, Leaf Mold, Septoria Leaf Spot, Spider Mites, Target Spot, Yellow Leaf Curl Virus, Mosaic Virus, Healthy |
+
+---
+
+## 🛠️ Technologies
+
+| Category | Technologies | Purpose |
+|----------|-------------|---------|
+| **Deep Learning** | TensorFlow, Keras, MobileNetV2 | Model development and training |
+| **Web Framework** | Streamlit | Web application interface |
+| **Backend** | Firebase Auth, Firestore | Authentication & database |
+| **Data Processing** | NumPy, Pandas, Pillow | Image preprocessing |
+| **Visualization** | Matplotlib, Plotly | Charts and graphs |
+| **Version Control** | Git, GitHub | Collaboration and code management |
+
+---
+
+## 📁 Project Structure
 
 ```
-LeafGuard/
-├── data/                  # Chứa dữ liệu (Raw và Processed - Bỏ qua trên Git)
-├── notebooks/             # Quy trình làm việc (.ipynb) theo thứ tự 1-2-3
-├── src/                   # Source code Python có thể tái sử dụng
-├── models/                # Mô hình đã train (.h5) và tối ưu hóa (.tflite)
-├── docs/                  # Tài liệu và Sơ đồ quan trọng
-├── README.md              # File bạn đang đọc
-└── requirements.txt       # Danh sách dependencies
+AI_LeafGuard_Team/
+├── 📂 config/                  # Configuration files
+│   └── firebase_config.py      # Firebase settings
+├── 📂 database/                # Database operations
+│   └── firestore_manager.py    # Firestore CRUD operations
+├── 📂 dataset/                 # Dataset files
+│   ├── solutions.json          # Treatment information
+│   └── class_weights.json      # Class balancing weights
+├── 📂 figures/                 # Generated visualizations
+│   ├── model_architecture.png
+│   ├── confusion_matrix.png
+│   └── f1_score_by_class.png
+├── 📂 models/                  # Trained models
+│   ├── MobileNetV2_best.h5     # Best trained model
+│   ├── class_indices.json      # Class name mapping
+│   └── evaluation_report.json  # Performance metrics
+├── 📂 pages/                   # Streamlit pages
+│   ├── Login.py
+│   ├── Register.py
+│   ├── Profile.py
+│   └── History.py
+├── 📂 src/                     # Source code
+│   ├── auth_manager.py         # Authentication logic
+│   ├── balance_data.py         # Class balancing
+│   ├── data_loader.py          # Data generators
+│   ├── model_trainer.py        # Model building & training
+│   ├── ui_components.py        # UI styling
+│   └── utils.py                # Utility functions
+├── 📄 app.py                   # Main Streamlit application
+├── 📄 train.py                 # Training script
+├── 📄 requirements.txt         # Python dependencies
+└── 📄 README.md                # This file
 ```
 
------
+---
 
-## Dữ liệu (Dataset)
+## 🚀 Installation
 
-Dự án sử dụng bộ dữ liệu PlantVillage để huấn luyện và kiểm thử mô hình.
+### Prerequisites
+- Python 3.8 or higher
+- Git
+- (Optional) CUDA-enabled GPU for faster training
 
-  * **Nguồn:** Kaggle PlantVillage Dataset (phiên bản đã chọn lọc).
-  * **Tiền xử lý:** Tất cả ảnh được Resize về **224x224**, Normalization, và sử dụng các kỹ thuật **Augmentation** để tăng tính đa dạng.
-  * **Chia tập:** Dữ liệu được chia **70/15/15** (Train/Validation/Test) và được cân bằng lớp (Class Balancing) qua Oversampling.
-
-### Link Tải Dữ liệu
-
-Do kích thước lớn, dữ liệu được lưu trữ ngoài GitHub. Vui lòng tải về và giải nén vào thư mục `data/` trước khi chạy Notebook:
-
-  * **[Link]**
-
------
-
-## Hướng dẫn Chạy dự án
-
-Thực hiện theo các bước sau để thiết lập môi trường và tái tạo kết quả của dự án:
-
-### 1\. Yêu cầu Tiên quyết (Prerequisites)
-
-  * Node.js (nếu sử dụng công cụ frontend)
-  * Python 3.8+
-  * Git
-
-### 2\. Nhân bản Repository
+### Step 1: Clone the Repository
 
 ```bash
-# Clone dự án về máy
-$ git clone https://github.com/YourUsername/LeafGuard.git
-$ cd LeafGuard
+git clone https://github.com/Tbaonhi/AI_LeafGuard_Team.git
+cd AI_LeafGuard_Team
 ```
 
-### 3\. Cài đặt Thư viện
-
-Sử dụng file `requirements.txt` để cài đặt tất cả các dependencies cần thiết:
+### Step 2: Create Virtual Environment (Recommended)
 
 ```bash
-$ pip install -r requirements.txt
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# Linux/Mac
+source venv/bin/activate
 ```
-(to be continue)
 
-### tạo file .env để tạo kết nối với database
+### Step 3: Install Dependencies
+
+```bash
+pip install -r requirements.txt
 ```
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=Your_password
-DB_NAME=leafguard_db
+
+### Step 4: Firebase Setup (Optional - for full features)
+
+1. Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+2. Enable Authentication (Email/Password)
+3. Create a Firestore database
+4. Download service account credentials
+5. Create `.env` file:
+
+```env
+FIREBASE_CREDENTIALS_PATH=path/to/your/firebase-credentials.json
 ```
-   git pull
-   python database/init_db.py  # Tự động cập nhật
------
 
-## 👥 Nhóm Phát triển (Team)
+---
 
-| Thành viên | Nhiệm vụ chính |
-| :--- | :--- |
-| **Trương Tuyết Trinh** |  |
-| **Trần Bảo Nhi** |  |
-| **Phan Thị Thùy Nhung** |  |
-| **Nguyễn Hoàng Thanh Trâm** |  |
+## 💻 Usage
 
------
+### Run the Web Application
 
+```bash
+streamlit run app.py
+```
+
+The application will open at `http://localhost:8501`
+
+### Train the Model (Optional)
+
+If you want to retrain the model:
+
+1. Download the PlantVillage dataset from [Kaggle](https://www.kaggle.com/datasets/emmarex/plantdisease)
+2. Extract to `dataset/` folder with structure:
+   ```
+   dataset/
+   ├── train/
+   ├── val/
+   └── test/
+   ```
+3. Run training:
+   ```bash
+   python train.py
+   ```
+
+---
+
+## � Dataset
+
+| Attribute | Value |
+|-----------|-------|
+| **Source** | PlantVillage Dataset (Kaggle) |
+| **Total Classes** | 15 |
+| **Plants Covered** | Pepper Bell, Potato, Tomato |
+| **Image Size** | 224 × 224 pixels |
+| **Split Ratio** | 70% Train / 15% Val / 15% Test |
+| **Preprocessing** | Resize, Normalize, Augmentation |
+| **Class Balancing** | Class Weights Applied |
+
+### Data Augmentation:
+- Rotation: ±20°
+- Width/Height Shift: 20%
+- Zoom: 20%
+- Horizontal Flip: Yes
+
+---
+
+## 👥 Team
+
+| Member | Role | Responsibilities |
+|--------|------|------------------|
+| **Trương Tuyết Trinh**  | Dataset Setup, Model Training, Database Operations |
+| **Trần Bảo Nhi**  | Data Cleaning, Firebase Integration, Authentication |
+| **Phan Thị Thùy Nhung**  | Class Balancing, Streamlit Development |
+| **Nguyễn Hoàng Thanh Trâm**  | Data Preprocessing, UI/UX Design |
+
+---
+
+## 📄 License
+
+This project is developed for educational purposes as part of the Artificial Intelligence course at VNUK.
+
+---
+
+## 🙏 Acknowledgments
+
+- [PlantVillage Dataset](https://www.kaggle.com/datasets/emmarex/plantdisease) for providing the training data
+- [TensorFlow](https://www.tensorflow.org/) and [Keras](https://keras.io/) for the deep learning framework
+- [Streamlit](https://streamlit.io/) for the web application framework
+- [Firebase](https://firebase.google.com/) for authentication and database services
+
+---
+
+<div align="center">
+
+**Made with ❤️ by LeafGuard Team**
+
+⭐ Star this repository if you find it helpful!
+
+</div>
